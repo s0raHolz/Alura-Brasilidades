@@ -12,6 +12,19 @@ class DatasBr:
         mes = str(self.momento_cadastro.month)
         return meses_do_ano[mes]
 
+    def dia_semana_cadastro(self):
+        dias_semana = {"6": "Domingo", "0": "Segunda-feira", "1": "Terça-feira", "2": "Quarta-feira",
+                      "3": "Quinta-feira", "4": "Sexta-feira", "5": "Sábado"}
+        dia = str(self.momento_cadastro.weekday())
+        return dias_semana[dia]
+
+    def tempo_cadastro(self):
+        return datetime.today() + timedelta(days=32, hours=13) - self.momento_cadastro
+
+    def __str__(self):
+        return  self.momento_cadastro.strftime("%d/%m/%Y %H:%M")
+
 
 cadastro = DatasBr()
-print(cadastro.mes_cadastro())
+print(cadastro.mes_cadastro(), cadastro.dia_semana_cadastro())
+print(cadastro, cadastro.tempo_cadastro())
