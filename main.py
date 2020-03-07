@@ -1,4 +1,6 @@
+from TelefonesBr import TelefonesBr
 from CpfCnpj import FabricaDocumento, Cpf, Cnpj
+
 
 class Menu:
 
@@ -10,7 +12,8 @@ class Menu:
 
     @staticmethod
     def mostra_menu():
-        print("[1] - Documento [CPF/CNPJ]")
+        print("[1] - Documentos [CPF/CNPJ]")
+        print("[2] - Nºs de Telefone")
         print("[0] - Sair")
 
     @staticmethod
@@ -25,7 +28,9 @@ class Menu:
                 continue
             break
         return ans
-class Registrador:
+
+
+class Cadastrador:
 
     @staticmethod
     def e_cpf_ou_cnpj(documento):
@@ -35,7 +40,7 @@ class Registrador:
             return "CNPJ"
 
     @classmethod
-    def registra_documetos(cls):
+    def cadastra_documetos(cls):
 
          documentos_cadastrados = {"CPF": [], "CNPJ": []}
          while True:
@@ -52,6 +57,20 @@ class Registrador:
 
          return documentos_cadastrados
 
+    @staticmethod
+    def cadastra_telefone():
+        telefones_cadastrados = []
+        while True:
+            tel_num = input("Digite o nº de telefone: ").strip()
+            telefone = TelefonesBr(tel_num)
+            telefones_cadastrados.append(telefone)
+            print(f"Seu {telefone.__class__.__name__.upper()} de código {telefone} foi cadastrado com sucesso!")
+            ans = input("Quer continuar? [S/N]")
+            if ans.upper().strip() == 'N':
+                break
+
+        return telefones_cadastrados
+
 class Impressor:
 
     @staticmethod
@@ -62,18 +81,37 @@ class Impressor:
                 print(f"{value}", end=" ")
             print()
 
-def main():
+    @staticmethod
+    def imprime_telefones(telefones):
+        print(f"Telefones registrados: ", end="")
+        for tel in telefones:
+            print(tel, end=" ")
+        print()
 
-    total_documentos_cadastrados = {"CPF": [], "CNPJ": []}
-    while True:
-        ans = Menu.menu()
-        if ans == 0:
-            break
-        elif ans == 1:
-            documentos_cadastrados = Registrador.registra_documetos()
-            total_documentos_cadastrados["CPF"].extend(documentos_cadastrados["CPF"])
-            total_documentos_cadastrados["CNPJ"].extend(documentos_cadastrados["CNPJ"])
-    Impressor.imprime_documentos(total_documentos_cadastrados)
+
+class Programa(Menu):
+
+    @classmethod
+    def menu(cls):
+        todos_documentos_cadastrados = {"CPF": [], "CNPJ": []}
+        todos_telefones_cadastrados = []
+        while True:
+            ans = super().menu()
+            if ans == 0:
+                break
+            elif ans == 1:
+                documentos_cadastrados = Cadastrador.cadastra_documetos()
+                todos_documentos_cadastrados["CPF"].extend(documentos_cadastrados["CPF"])
+                todos_documentos_cadastrados["CNPJ"].extend(documentos_cadastrados["CNPJ"])
+            elif ans == 2:
+                todos_telefones_cadastrados.extend(Cadastrador.cadastra_telefone())
+        return (todos_documentos_cadastrados, todos_telefones_cadastrados)
+
+
+def main():
+    doc_e_tel = Programa.menu()
+    Impressor.imprime_documentos(doc_e_tel[0])
+    Impressor.imprime_telefones(doc_e_tel[1])
 
 
 main()
