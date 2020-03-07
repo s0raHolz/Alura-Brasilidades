@@ -11,6 +11,7 @@ class Menu:
         print("Deseja cadastrar um usuário [S/N]? ", end="")
 
     def _recolhe_input(self):
+        inpt = bool()
         while True:
             try:
                 inpt = self._valida_input(input())

@@ -8,7 +8,7 @@ class Cadastrador:
     def cadastra_usuario(cls):
         documento = cls.cadastra_documeto()
         telefone = cls.cadastra_telefone()
-        momento_do_cadastro = DatasBr().momento_cadastro
+        momento_do_cadastro = DatasBr()
         return Usuario(documento, telefone, momento_do_cadastro)
 
     @staticmethod
