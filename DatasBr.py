@@ -23,8 +23,3 @@ class DatasBr:
 
     def __str__(self):
         return  self.momento_cadastro.strftime("%d/%m/%Y %H:%M")
-
-
-cadastro = DatasBr()
-print(cadastro.mes_cadastro(), cadastro.dia_semana_cadastro())
-print(cadastro, cadastro.tempo_cadastro())
