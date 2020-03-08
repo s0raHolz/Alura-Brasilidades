@@ -1,6 +1,6 @@
 from DatasBr import DatasBr
 from TelefonesBr import TelefonesBr
-from CpfCnpj import FabricaDocumento
+from DocumentosBr import FabricaDocumento
 
 class Cadastrador:
 
